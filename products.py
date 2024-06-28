@@ -74,10 +74,7 @@ class Product():
     @property
     def available(self):
         """bool: available == True"""
-        if self._rental_time == NoneType:
-            return True
-        else:
-            return False
+        return self._rental_time is None
         
 
         
