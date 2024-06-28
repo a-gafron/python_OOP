@@ -67,6 +67,8 @@ class Product():
     @property
     def rental_end(self):
         """datetime.date: returning the date when loan ends"""
+        if self._rental_start is None or self._rental_time is None:
+            return None
         return (self.rental_start + datetime.timedelta(weeks=self.rental_time))
     
     @property
