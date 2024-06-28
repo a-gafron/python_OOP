@@ -44,6 +44,38 @@ class Product():
         assert new_price > 0, 'New price must be positive'
         self._price_per_week = new_price
         
+    @property
+    def rental_start(self):
+        """datetime.date: only set by rent()"""
+        return self._rental_start
+    
+    @property
+    def rental_time(self):
+        """int: rental duration in weeks"""
+        return self._rental_time
+    
+    @rental_time.setter
+    def rental_time(self, new_time):
+        assert isinstance(self._rental_time, NoneType), "The item is on loan"
+        assert isinstance(new_time, (int, float)), "New time must be int or float"
+        assert new_time > 0, 'New time must be positive'
+        self._rental_time = new_time
+        
+    @property
+    def rental_end(self):
+        """datetime.date: returning the date when loan ends"""
+        return (self.rental_start + datetime.timedelta(weeks=self.rental_time))
+    
+    @property
+    def available(self):
+        """bool: available == True"""
+        if self._rental_time == NoneType:
+            return True
+        else:
+            return False
+        
+
+        
     def rent(self, rental_time):
         """
         Rent product for given rental time.
