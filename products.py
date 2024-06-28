@@ -96,4 +96,6 @@ class Product():
         else:
             return False
 
+    def product_description(self):
+        print('Product: {}\nPrice per week: {}'.format(self.name, self.price_per_week))
     
