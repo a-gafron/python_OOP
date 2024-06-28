@@ -33,5 +33,35 @@ class Product():
         self._rental_time = None
         self._rental_start = None
         
+    @property
+    def price_per_week(self):
+        """int, float: Product's rental price per week."""
+        return self._price_per_week
+    
+    @price_per_week.setter
+    def price_per_week(self, new_price):
+        assert isinstance(new_price, (int, float)), 'New price must be int or float'
+        assert new_price > 0, 'New price must be positive'
+        self._price_per_week = new_price
+        
+    def rent(self, rental_time):
+        """
+        Rent product for given rental time.
+        
+        Args:
+            rental_time (int): Time to rent the product in weeks.
+                Must be strictly positive.
+                
+        Returns:
+            True if Product is available, False otherwise.
+        """
+        assert isinstance(rental_time, int), 'rental_time must be int'
+        assert rental_time > 0, 'rental_time must be positive'
+        if self.available:
+            self._rental_time = rental_time
+            self._rental_start = datetime.date.today()
+            return True
+        else:
+            return False
 
     
