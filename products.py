@@ -1,5 +1,6 @@
 import uuid
 import datetime
+
 NoneType = type(None)
 
 
@@ -56,8 +57,10 @@ class Product():
     
     @rental_time.setter
     def rental_time(self, new_time):
-        assert isinstance(self._rental_time, NoneType), "The item is on loan"
         assert isinstance(new_time, (int, float)), "New time must be int or float"
+        assert self._rental_start is not None, "The item is not rented yet"
+        if self._rental_time is not None:
+            assert new_time > self._rental_time, "New rental time must be greater than the current rental time"
         assert new_time > 0, 'New time must be positive'
         self._rental_time = new_time
         
