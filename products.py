@@ -100,4 +100,68 @@ class Product():
 
     def product_description(self):
         print('Product: {}\nPrice per week: {}'.format(self.name, self.price_per_week))
+
+class Laptop(Product):
+    """ Class to represent a laptop, which is-a Product
+    
+    Args:
+        name (str): Product's name.
+        price_per_week (float, optional): Product's rental price per week.
+            Defaults to 0.
+    
+    Attributes:
+        name (str): Product's name.
+        product_id (str): Unique product ID given by uuid.uuid1().
+        buyable (bool): Product's status regarding purchases. Defaults to False.
+    
+    Class Attribute(int): 
+        max_rental_time: maximum of a loan for a laptop
+        
+    """
+    
+    max_rental_time = 12
+    
+    def rent(self, rental_time):
+        
+        """
+        Rent product for given rental time.
+        
+        Args:
+        rental_time (int): Time to rent the product in weeks.
+        Must be strictly positive.
+        
+        Returns:
+        True if Product is available, False otherwise.
+        """
+    
+        assert isinstance(rental_time, int), 'rental_time must be int'
+        assert rental_time > 0, 'rental_time must be positive'
+        assert rental_time <= Laptop.max_rental_time, 'Rental time must be below {} weeks'.format(Laptop.max_rental_time)
+        if self.available:
+            self._rental_time = rental_time
+            self._rental_start = datetime.date.today()
+            return True
+        else:
+            return False
+    
+    @property
+    def rental_time(self):
+        """int: rental duration in weeks. Can be extended."""
+        return self._rental_time
+    
+    @rental_time.setter
+    def rental_time(self, new_time):
+        assert isinstance(new_time, (int, float)), "New time must be int or float"
+        assert self._rental_start is not None, "The item is not rented yet"
+        if self._rental_time is not None:
+            assert new_time <= Laptop.max_rental_time, "You can loan laptops for a maximum of 12 months"
+            assert new_time > self._rental_time, "New rental time must be greater than the current rental time"
+        assert new_time > 0, 'New time must be positive'
+        self._rental_time = new_time
+
+    @classmethod    
+    def display_max_rental_time(cls):
+        """Displays maximum rental time for product."""
+        return cls.max_rental_time
+        
     
