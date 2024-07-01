@@ -42,3 +42,28 @@ class Customer():
         self._rented_items = []
         self._paid = {}
         self._owned_items = [] # for purchased items
+        
+    @property
+    def invoice(self):
+        """float: Outstanding amount to pay by customer for due items."""
+        return sum([item.rental_time * item.price_per_week for item in self.due_items])
+    
+    @property
+    def current_items(self):
+        return [item for item in self._rented_items if item.rental_end > datetime.date.today()]
+    
+    @property
+    def due_items(self):
+        return [item for item in self._rented_items
+                if item.rental_end <= datetime.date.today()
+                and not self._paid[item.product_id]]
+    
+    @property
+    def paid_items(self):
+        return [item for item in self._rented_items
+                if item.rental_end <= datetime.date.today()
+                and self._paid[item.product_id]]
+    
+    @property
+    def owned_items(self):
+        return self._owned_items
