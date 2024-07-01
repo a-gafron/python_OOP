@@ -42,6 +42,21 @@ class Customer():
         self._rented_items = []
         self._paid = {}
         self._owned_items = [] # for purchased items
+    
+    def __repr__(self):
+        return 'Customer: {}, {} items rented.'.format(self.name, len(self.current_items))
+    
+    def __str__(self):
+        """Provide a user-friendly string representation of the Customer object."""
+        owned_items_str = ', '.join(item.name for item in self.owned_items)
+        rented_items_str = ', '.join(item.name for item in self.current_items)
+        due_items_str = ', '.join(item.name for item in self.due_items)
+        
+        return (f"{self.name}\n"
+                f"Owned items: [{owned_items_str}]\n"
+                f"Rented items: [{rented_items_str}]\n"
+                f"Due items: [{due_items_str}]\n"
+                f"Amount payable: {self.invoice}")
         
     @property
     def invoice(self):
