@@ -34,6 +34,12 @@ class Product():
         self._rental_time = None
         self._rental_start = None
         
+    def __repr__(self):
+        return '{}'.format(self.name)
+    
+    def __str__(self):
+        return f"{self.name}\nPrice per week: {self.price_per_week}"
+        
     @property
     def price_per_week(self):
         """int, float: Product's rental price per week."""
