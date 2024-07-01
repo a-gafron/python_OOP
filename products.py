@@ -178,3 +178,33 @@ class Laptop(Product):
         else:
             return "Something went wrong sry."
     
+class Phone(Product):
+    """
+    Contains basic attributes of a Phone. Subclass of Product.
+    
+    Args:
+        name (str): Product's name.
+        price_per_week (float): Product's rental price per week. Defaults to None.
+    
+    Attributes:
+        name (str): Product's name.
+        product_id (str): Unique product ID given by uuid.uuid1().
+        buyable (bool): Product's status regarding purchases. Defaults to True.
+        price_per_week (float): Product's rental price per week.
+    
+    """
+    def __init__(self,
+                 name,
+                 price_per_week=0,
+                 buyable = True):
+        super().__init__(name, price_per_week)
+        self.buyable = buyable
+    
+    @classmethod
+    def from_dict(cls, a_dictionary):
+        """Allows class creation from dict of parameters."""
+        
+        assert isinstance(a_dictionary, dict), "Given argument needs to be of the type: dictionary"
+        assert 'name' and 'price_per_week' in a_dictionary.keys(), "Given dictionary should contain the keys name and price_per_week"
+        
+        return cls(name = a_dictionary.get('name'), price_per_week= a_dictionary.get("price_per_week"))
