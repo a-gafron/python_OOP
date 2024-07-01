@@ -112,3 +112,35 @@ class Customer():
             print('Sorry, {} is currently not available'.format(item_name))
             print('Here is a list of products and their availability:')
             self.store.display_products()
+            
+    def buy(self, item_name):
+        """
+        Buy item from the store if available and buyable.
+
+        Args:
+            item_name (str): Item name as given by Product.__repr__().
+
+        Raises:
+            AssertionError: If item_name not in self.store.products or item is not buyable or available.
+        """
+        # Check if item is in the store
+        assert item_name in [item.name for item in self.store.products], 'Item must be in store'
+
+        # Extract the item from the store
+        item = next(item for item in self.store.products if item.name == item_name)
+
+        # Check if the item is available and buyable
+        if item.available and item.buyable:
+            # Remove item from the store
+            self.store.products.remove(item)
+            # Add item to customer's owned items
+            self._owned_items.append(item)
+        else:
+            # Print a message if the item is not available or buyable
+            if not item.available:
+                print(f'Sorry, {item_name} is currently not available for purchase.')
+            if not item.buyable:
+                print(f'Sorry, {item_name} is not buyable.')
+            # Display all items with their availability
+            print('Here is a list of products and their availability:')
+            self.store.display_products()
