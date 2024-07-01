@@ -67,3 +67,19 @@ class Customer():
     @property
     def owned_items(self):
         return self._owned_items
+    
+    def pay_invoice(self, amount_paid):
+        """Pay invoice and reset it to 0.0. Removes payed for items from current_items.
+        
+        Args:
+            amount_paid (float): Amount to pay to settle invoice.
+
+        """
+
+        assert isinstance(amount_paid, (int, float)), 'amount_paid must be int or float'
+        assert amount_paid > 0, 'amount_paid must be positive'
+        assert self.invoice == amount_paid, 'Whole bill must be paid, no partial payments possible'
+
+        # delete old items
+        for item in self.due_items:
+            self._paid[item.product_id] = True
