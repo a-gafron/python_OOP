@@ -164,4 +164,17 @@ class Laptop(Product):
         """Displays maximum rental time for product."""
         return cls.max_rental_time
         
+    @classmethod
+    def from_list(cls, a_list):
+        assert isinstance(a_list, list), "Given argument has to be of the type: list"
+        assert len(a_list) <= 2, "Given list should have at may two entries"
+        if len(a_list) == 2:
+            name = a_list[0]
+            price_per_week = a_list[1]
+            return cls(name, price_per_week)
+        elif len(a_list) == 1:
+            name = a_list[0]
+            return cls(name)
+        else:
+            return "Something went wrong sry."
     
