@@ -83,3 +83,32 @@ class Customer():
         # delete old items
         for item in self.due_items:
             self._paid[item.product_id] = True
+            
+    def rent(self, item_name, rental_time):
+        """Rent item for specific amount of time.
+        
+        Args:
+            item_name (str): Item name as given by Product.__repr__().
+            rental_time (int): Rental time in weeks.
+        
+        Raises:
+            AssertionError: If item_name not in self.store.products.
+
+        """
+
+        #check if item in Store
+        assert item_name in [item.name for item in self.store.products], 'item must be in store'
+        #check if item available
+        rental_item = [item for item in self.store.products
+                      if item.name == item_name][0]
+        
+        # if item available in store, set rental time and start rental today
+        if rental_item.rent(rental_time):
+            self._rented_items.append(rental_item)
+            self._paid[rental_item.product_id] = False
+            
+        # if not available, display message and all store items
+        else:
+            print('Sorry, {} is currently not available'.format(item_name))
+            print('Here is a list of products and their availability:')
+            self.store.display_products()
