@@ -33,3 +33,27 @@ class RentalStore():
                 item.buyable
                 )
             )
+            
+    def __len__(self):
+        """Return the number of products in the store."""
+        return len(self.products)
+    
+    def __add__(self, item):
+        """Add a product to the store."""
+        assert isinstance(item, Product), "Only instances of Product can be added to the store"
+        
+        self.products.append(item)
+        print('{} is added to the store'.format(item.__repr__()))
+        return self
+            
+    def __sub__(self, item):
+        """Remove a product from the store."""
+        assert isinstance(item, Product), "Only instances of Product can be removed from the store"
+        
+        for product in self.products:
+            if product.name == item.name:
+                self.products.remove(product)
+                return self
+            
+        print('{} cannot be removed, as it is not part of the store\'s products'.format(item.__repr__()))
+        return self
